@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie'; 
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -13,9 +14,7 @@ export default function LoginPage() {
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
@@ -25,23 +24,23 @@ export default function LoginPage() {
         throw new Error(data.error || 'Login failed');
       }
 
-      // Store JWT in localStorage
-      localStorage.setItem('token', data.token);
+      // Store token in cookie (not HttpOnly)
+      Cookies.set('token', data.token, { expires: 7 }); // 7 days
+
       alert('Login successful!');
-      router.push('/dashboard'); // 👈 redirect to dashboard
-    } catch (error: any) {
-      alert(`Login failed: ${error.message}`);
+      router.push('/dashboard');
+    } catch (err: any) {
+      alert(`Login failed: ${err.message}`);
     }
   };
 
   return (
-    <main className="flex items-center justify-center min-h-screen bg-gray-100">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4">
       <form
         onSubmit={handleLogin}
-        className="bg-white p-8 rounded shadow-md w-full max-w-md"
+        className="bg-white p-8 rounded shadow-md w-full max-w-sm"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
-
+        <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
         <input
           type="email"
           placeholder="Email"
