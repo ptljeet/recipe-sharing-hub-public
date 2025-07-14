@@ -25,7 +25,7 @@ export default function RegisterPage() {
       }
 
       alert('Registration successful!');
-      router.push('/login'); 
+      router.push('/login');
     } catch (error: any) {
       alert(`Registration failed: ${error.message}`);
     }
@@ -33,10 +33,7 @@ export default function RegisterPage() {
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form
-        onSubmit={handleRegister}
-        className="bg-white p-8 rounded shadow-md w-full max-w-md"
-      >
+      <form onSubmit={handleRegister} className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
 
         <input
@@ -66,10 +63,7 @@ export default function RegisterPage() {
           required
         />
 
-        <button
-          type="submit"
-          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
-        >
+        <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
           Sign Up
         </button>
       </form>
