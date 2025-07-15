@@ -1,9 +1,17 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, models } from 'mongoose';
 
-const favoriteSchema = new mongoose.Schema({
-  user:   { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  recipe: { type: mongoose.Schema.Types.ObjectId, ref: 'Recipe', required: true },
-  savedAt: { type: Date, default: Date.now }
+const favouriteSchema = new Schema({
+  userId: {
+    type: String,
+    required: true,
+  },
+  recipeId: {
+    type: String,
+    required: true,
+  },
+}, {
+  timestamps: true,
 });
 
-export default mongoose.models.Favorite || mongoose.model('Favorite', favoriteSchema);
+const Favourite = models.Favourite || mongoose.model('Favourite', favouriteSchema);
+export default Favourite;

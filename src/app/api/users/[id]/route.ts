@@ -1,22 +1,34 @@
+import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
-import User from '@/models/User';
-import { NextResponse } from 'next/server';
+import Recipe from '@/models/Recipe';
+import jwt from 'jsonwebtoken';
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
-  await connectDB();
-  const user = await User.findById(params.id);
-  return NextResponse.json(user);
-}
+export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    await connectDB();
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
-  await connectDB();
-  const data = await req.json();
-  const user = await User.findByIdAndUpdate(params.id, data, { new: true });
-  return NextResponse.json(user);
-}
+    const token = req.cookies.get('token')?.value;
+    if (!token) return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
-  await connectDB();
-  await User.findByIdAndDelete(params.id);
-  return NextResponse.json({ message: 'User deleted' });
+    const decoded: any = jwt.decode(token);
+    const userId = decoded?.userId;
+    if (!userId) return new NextResponse(JSON.stringify({ error: 'Invalid token' }), { status: 401 });
+
+    const recipe = await Recipe.findById(params.id);
+    if (!recipe) return new NextResponse(JSON.stringify({ error: 'Recipe not found' }), { status: 404 });
+
+    const isFavorited = recipe.favorites.includes(userId);
+    if (isFavorited) {
+      recipe.favorites.pull(userId);
+    } else {
+      recipe.favorites.push(userId);
+    }
+
+    await recipe.save();
+
+    return NextResponse.json({ favorited: !isFavorited });
+  } catch (err) {
+    console.error(err);
+    return new NextResponse(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 });
+  }
 }

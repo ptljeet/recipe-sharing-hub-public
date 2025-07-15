@@ -1,8 +1,7 @@
-
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-export async function POST() {
-  (await cookies()).delete('token');
-  return NextResponse.json({ message: 'Logged out' });
+export async function GET() {
+  const res = NextResponse.redirect(new URL('/login', process.env.NEXTAUTH_URL || 'http://localhost:3000'));
+  res.cookies.set('token', '', { maxAge: 0 });
+  return res;
 }
