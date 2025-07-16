@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍳 Recipe Sharing Hub
 
-## Getting Started
+The **Recipe Sharing Hub** is a full-stack web application built with Next.js, TypeScript, and MongoDB. It is designed for food enthusiasts to **share**, **discover**, and **save recipes**, offering a social platform for collaboration and inspiration in the kitchen.
 
-First, run the development server:
+---
+
+## 📝 Project Description
+
+The Recipe Sharing Hub provides a community-driven space where users can:
+- Share their own recipes (with images)
+- Browse recipes posted by others
+- Save and manage their favorite recipes
+- Discover new dishes by category, tags, or search
+- Engage in a clean, intuitive, and mobile-friendly interface
+
+---
+
+## 🎯 Target Audience
+
+- Home cooks & professional chefs  
+- Culinary bloggers & students  
+- Food hobbyists & health-focused individuals  
+- Anyone who enjoys exploring new recipes!
+
+---
+
+## 🥅 Project Objective
+
+To build an engaging and collaborative recipe-sharing platform that:
+- Promotes food culture and creativity  
+- Supports rich user interaction  
+- Allows easy posting, discovery, and saving of recipes  
+- Delivers a seamless experience across devices
+
+---
+
+## 👨‍💻 Team Roles
+
+| Team Member     | Responsibilities                               |
+|------------------|-------------------------------------------------|
+| **Neha Desai**   | User Registration & Login, Save/Favorite Recipes |
+| **Devarsh Raval**| Add a Recipe, Search & Filter Recipes           |
+| **Jeet Patel**   | View All Public Recipes, User Profile Page      |
+
+---
+
+## 🚀 Tech Stack
+
+- **Frontend:** Next.js 15, TypeScript, Tailwind CSS (optional)
+- **Backend:** API Routes, MongoDB with Mongoose
+- **Authentication:** JWT / NextAuth
+- **Database:** MongoDB (Atlas/local)
+- **Hosting:** Vercel / Local Dev
+
+---
+
+## 🛠️ How to Run Locally
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/your-username/recipe-sharing-hub.git
+cd recipe-sharing-hub
+```
+
+2. **Install dependencies**
+
+```bash
+npm install
+```
+
+3. **Configure environment**
+
+Create a `.env.local` file and add your MongoDB URI:
+
+```env
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/recipes
+```
+
+4. **Run the development server**
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧩 Key Features
 
-## Learn More
+- 🔐 Secure registration and login
+- 🍲 Add recipes with images, categories, and tags
+- 🔍 Search and filter by title, tags, or category
+- ❤️ Favorite and save recipes for later
+- 👤 User profile page to manage your posts
+- 🌐 View public feed of all recipes
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
 
-## Deploy on Vercel
+├───public
+└───src
+    ├───app
+    │   ├───api
+    │   │   ├───auth
+    │   │   │   ├───login
+    │   │   │   └───logout
+    │   │   ├───recipes
+    │   │   │   └───[id]
+    │   │   └───users
+    │   │       └───[id]
+    │   │           └───favorites
+    │   ├───dashboard
+    │   ├───login
+    │   ├───recipes
+    │   │   ├───new
+    │   │   └───[id]
+    │   ├───register
+    │   └───saved
+    ├───components
+    ├───context
+    ├───lib
+    └───models
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is built for educational and collaborative purposes by students of Humber College, Canada.
+
+---
+
+Enjoy sharing and discovering delicious ideas! 🍽️
