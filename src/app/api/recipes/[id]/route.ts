@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import Recipe from '@/models/Recipe';
 import { connectDB } from '@/lib/mongodb';
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, context: { params: { id: string } }) {
   try {
     await connectDB();
-    const recipe = await Recipe.findById(params.id);
+    const recipe = await Recipe.findById(context.params.id);
 
     if (!recipe) {
       return new NextResponse(JSON.stringify({ error: 'Recipe not found' }), { status: 404 });
