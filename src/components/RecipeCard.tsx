@@ -44,7 +44,7 @@ const RecipeCard: React.FC<Props> = ({ recipe, onFavoriteToggle, showActions = f
 
           {showActions && onFavoriteToggle && (
             <button
-              onClick={(e) => {
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault(); // Prevent link navigation
                 onFavoriteToggle(recipe._id);
               }}
