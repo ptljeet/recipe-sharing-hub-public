@@ -4,12 +4,12 @@ import { connectDB } from '@/lib/mongodb';
 
 export async function GET(
   _req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
     await connectDB();
 
-    const recipe = await Recipe.findById(context.params.id);
+    const recipe = await Recipe.findById(params.id);
 
     if (!recipe) {
       return NextResponse.json({ error: 'Recipe not found' }, { status: 404 });
