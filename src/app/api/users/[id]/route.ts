@@ -3,19 +3,25 @@ import { connectDB } from '@/lib/mongodb';
 import Recipe from '@/models/Recipe';
 import jwt from 'jsonwebtoken';
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest, { params }: any) {
   try {
     await connectDB();
 
     const token = req.cookies.get('token')?.value;
-    if (!token) return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+    if (!token) {
+      return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+    }
 
     const decoded: any = jwt.decode(token);
     const userId = decoded?.userId;
-    if (!userId) return new NextResponse(JSON.stringify({ error: 'Invalid token' }), { status: 401 });
+    if (!userId) {
+      return new NextResponse(JSON.stringify({ error: 'Invalid token' }), { status: 401 });
+    }
 
     const recipe = await Recipe.findById(params.id);
-    if (!recipe) return new NextResponse(JSON.stringify({ error: 'Recipe not found' }), { status: 404 });
+    if (!recipe) {
+      return new NextResponse(JSON.stringify({ error: 'Recipe not found' }), { status: 404 });
+    }
 
     const isFavorited = recipe.favorites.includes(userId);
     if (isFavorited) {
@@ -26,9 +32,11 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
     await recipe.save();
 
-    return NextResponse.json({ favorited: !isFavorited });
-  } catch (err) {
-    console.error(err);
-    return new NextResponse(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 });
+    return NextResponse.json({
+      success: true,
+      favorited: !isFavorited,
+    });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || 'Server Error' }, { status: 500 });
   }
 }

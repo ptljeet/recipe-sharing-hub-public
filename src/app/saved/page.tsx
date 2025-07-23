@@ -4,9 +4,21 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import RecipeCard from '@/components/RecipeCard';
 
+interface Recipe {
+  _id: string;
+  title: string;
+  description: string;
+  image?: string;
+  category?: string;
+  tags?: string[];
+  createdAt?: string;
+  likes?: string[];
+  favorites: string[];
+}
+
 export default function SavedRecipesPage() {
   const { user } = useAuth();
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -50,7 +62,7 @@ export default function SavedRecipesPage() {
         <p className="text-gray-500">You have not saved any recipes yet.</p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {recipes.map((recipe: any) => (
+          {recipes.map((recipe) => (
             <RecipeCard key={recipe._id} recipe={recipe} />
           ))}
         </div>

@@ -1,12 +1,8 @@
-// src/app/api/users/[id]/favorites/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Recipe from '@/models/Recipe';
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(req: NextRequest, { params }: any) {
   await connectDB();
   const userId = params.id;
 
@@ -39,14 +35,12 @@ export async function POST(
   }
 }
 
-export async function GET(
-  _req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_req: NextRequest, { params }: any) {
   await connectDB();
+
   try {
     const recipes = await Recipe.find({ favorites: params.id });
-    return NextResponse.json(recipes);
+    return NextResponse.json(recipes, { status: 200 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Server Error' }, { status: 500 });
   }
